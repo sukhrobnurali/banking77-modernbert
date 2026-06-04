@@ -1,0 +1,19 @@
+# Trained model checkpoints / Trainer output_dir (pushed to the Hub, not committed)
+outputs/
+checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# HF / datasets cache
+.cache/
+
+# Secrets / environment
+.env
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
