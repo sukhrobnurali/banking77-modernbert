@@ -1,0 +1,21 @@
+{
+  "dataset": "PolyAI/banking77",
+  "base_model": "answerdotai/ModernBERT-base",
+  "test_size": 3080,
+  "majority_class": {
+    "name": "card_payment_fee_charged",
+    "accuracy": 0.012987012987012988,
+    "f1_macro": 0.000333000333000333,
+    "f1_weighted": 0.00033300033300033295
+  },
+  "frozen_linear_probe": {
+    "accuracy": 0.8905844155844156,
+    "f1_macro": 0.8906348852472742,
+    "f1_weighted": 0.8906348852472742
+  },
+  "fine_tuned": {
+    "accuracy": 0.9175324675324675,
+    "f1_macro": 0.9175981939897471,
+    "f1_weighted": 0.9175981939897472
+  }
+}

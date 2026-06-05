@@ -1,7 +1,3 @@
-<!-- NUMBERS PENDING: every <...from metrics.json> marker and the confusable-pairs
-     sentence are filled after the Colab run produces results/metrics.json and Cell 10's
-     output. Do not upload to the Hub until the markers are replaced with real values
-     (the YAML model-index below is not valid until then). -->
 ---
 language:
 - en
@@ -30,10 +26,10 @@ model-index:
       name: Banking77 (test, 3080)
     metrics:
     - type: accuracy
-      value: <fine_tuned.accuracy from metrics.json>
+      value: 0.9175
       name: Accuracy
     - type: f1
-      value: <fine_tuned.f1_macro from metrics.json>
+      value: 0.9176
       name: Macro-F1
 ---
 
@@ -46,6 +42,7 @@ for **77-way English banking-intent classification**, trained on
 - **Base model:** `answerdotai/ModernBERT-base` (149M params, Apache-2.0)
 - **Task:** single-label intent detection over 77 fine-grained banking intents
 - **Held-out test:** the official Banking77 `test` split (3,080 queries, 40/intent), disjoint from training
+- **Result:** 0.9175 accuracy / 0.9176 macro-F1 on the test split
 - **Training code:** https://github.com/sukhrobnurali/banking77-modernbert
 
 ## Intended use
@@ -62,23 +59,25 @@ dialog and triage.
 
 ## Evaluation
 
-Same protocol for every row of the table; all numbers are on the **untouched test split**.
-Baselines contextualize the fine-tune's gain: a majority-class floor and a
-frozen-encoder linear probe (mean-pooled base-model embeddings -> logistic regression).
+The same protocol is applied to every row of the table, all on the **untouched test split**.
+Two baselines contextualize the fine-tune's gain: a majority-class floor, and a
+frozen-encoder linear probe (mean-pooled base-model embeddings → logistic regression).
 
 | Model | Accuracy | Macro-F1 | Weighted-F1 |
 |---|---|---|---|
-| Majority class | <majority_class.accuracy> | <majority_class.f1_macro> | <majority_class.f1_weighted> |
-| Frozen ModernBERT + linear probe | <frozen_linear_probe.accuracy> | <frozen_linear_probe.f1_macro> | <frozen_linear_probe.f1_weighted> |
-| **This model (fine-tuned)** | **<fine_tuned.accuracy>** | **<fine_tuned.f1_macro>** | **<fine_tuned.f1_weighted>** |
+| Majority class | 0.0130 | 0.0003 | 0.0003 |
+| Frozen ModernBERT + linear probe | 0.8906 | 0.8906 | 0.8906 |
+| **This model (fine-tuned)** | **0.9175** | **0.9176** | **0.9176** |
 
-Per-class precision/recall/F1 are in
-[`results/classification_report.txt`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/classification_report.txt);
-the 77x77 confusion matrix is
-[`results/confusion_matrix.png`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/confusion_matrix.png).
-The remaining errors cluster among semantically adjacent intents
-(insert the top confusable pairs printed by Cell 10, e.g. `card_arrival` vs
-`card_delivery_estimate`).
+ModernBERT's pretrained representations are already strong on this task — a linear probe
+on frozen embeddings reaches 0.8906 macro-F1 — so fine-tuning adds a consistent **+2.7
+points** of macro-F1 (0.8906 → 0.9176) on top of that, well clear of the 0.0003
+majority-class floor. At ~0.92 accuracy the residual errors fall among semantically
+adjacent intents; the per-class breakdown
+([`results/classification_report.txt`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/classification_report.txt))
+and the 77×77 confusion matrix
+([`results/confusion_matrix.png`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/confusion_matrix.png))
+pinpoint the specific clusters.
 
 ## Usage
 
