@@ -74,8 +74,10 @@ on frozen embeddings reaches 0.8948 macro-F1 — so fine-tuning adds **+4.5 poin
 macro-F1 (0.8948 → 0.9401) on top of that, well clear of the 0.0003 majority-class floor.
 
 At ~0.94 accuracy the residual errors stay concentrated among semantically adjacent
-intents — the closely related transfer / top-up families and look-alike card intents. Full
-per-class breakdown:
+intents. Per-class F1 bottoms out in the transfer / top-up families —
+`balance_not_updated_after_bank_transfer` (0.77), `pending_transfer` (0.83),
+`top_up_reverted` (0.86), `transfer_timing` (0.86) — with most other intents above 0.90.
+Full per-class breakdown:
 [`results/classification_report.txt`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/classification_report.txt);
 77×77 confusion matrix:
 [`results/confusion_matrix.png`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/confusion_matrix.png).
