@@ -88,9 +88,9 @@ def main():
     maj = scores(y_true, np.full_like(y_true, majority), zero_division=0)
     base = AutoModel.from_pretrained(config.MODEL_ID, attn_implementation="sdpa").to(device).eval()
     probe = LogisticRegression(max_iter=2000, n_jobs=-1).fit(
-        embed(train_ds[config.TEXT_COLUMN], base, tokenizer, device),
+        embed(list(train_ds[config.TEXT_COLUMN]), base, tokenizer, device),
         np.array(train_ds[config.LABEL_COLUMN]))
-    frozen = scores(y_true, probe.predict(embed(test_ds[config.TEXT_COLUMN], base, tokenizer, device)))
+    frozen = scores(y_true, probe.predict(embed(list(test_ds[config.TEXT_COLUMN]), base, tokenizer, device)))
 
     metrics = {"dataset": config.DATASET_ID, "base_model": config.MODEL_ID,
                "test_size": int(len(y_true)),
