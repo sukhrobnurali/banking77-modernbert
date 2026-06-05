@@ -72,12 +72,17 @@ frozen-encoder linear probe (mean-pooled base-model embeddings → logistic regr
 ModernBERT's pretrained representations are already strong on this task — a linear probe
 on frozen embeddings reaches 0.8906 macro-F1 — so fine-tuning adds a consistent **+2.7
 points** of macro-F1 (0.8906 → 0.9176) on top of that, well clear of the 0.0003
-majority-class floor. At ~0.92 accuracy the residual errors fall among semantically
-adjacent intents; the per-class breakdown
-([`results/classification_report.txt`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/classification_report.txt))
-and the 77×77 confusion matrix
-([`results/confusion_matrix.png`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/confusion_matrix.png))
-pinpoint the specific clusters.
+majority-class floor.
+
+At ~0.92 accuracy the residual errors fall among semantically adjacent intents. Per-class
+F1 spans 1.0000 (e.g. `apple_pay_or_google_pay`) down to 0.7436; the weakest intents sit in
+the closely related transfer / top-up families — `balance_not_updated_after_bank_transfer`
+(0.74), `pending_transfer` (0.79), `topping_up_by_card` (0.80), `declined_transfer` (0.83)
+— plus the `card_arrival` vs `card_delivery_estimate` pair (0.85 / 0.88), exactly the
+clusters you'd expect to be hardest. Full per-class breakdown:
+[`results/classification_report.txt`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/classification_report.txt);
+77×77 confusion matrix:
+[`results/confusion_matrix.png`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/confusion_matrix.png).
 
 ## Usage
 
