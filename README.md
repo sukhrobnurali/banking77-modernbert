@@ -35,3 +35,6 @@ python eval.py
 
 Fixed seed 42; hyperparameters in `config.py`. See `MODEL_CARD.md` for the full
 write-up, per-class breakdown, and confusion matrix.
+
+Optional: `python sweep.py` runs a quick learning-rate sweep that selects the winner on
+the validation split and evaluates it once on the held-out test (no Hub push).

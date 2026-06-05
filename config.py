@@ -28,6 +28,10 @@ WEIGHT_DECAY = 0.01
 EARLY_STOPPING_PATIENCE = 2
 METRIC_FOR_BEST = "f1_macro"
 
+# --- Quick LR sweep (sweep.py): select on val macro-F1, eval winner once on test ---
+LR_SWEEP = [3e-5, 5e-5, 8e-5]
+SWEEP_EPOCHS = 4
+
 # --- Paths ---
 OUTPUT_DIR = "outputs/modernbert-base-banking77"   # Trainer checkpoints (gitignored)
 RESULTS_DIR = "results"
