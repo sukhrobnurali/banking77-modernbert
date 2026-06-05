@@ -20,10 +20,15 @@ into a 77-way English banking-intent classifier on
 
 ## Reproduce
 
+**Colab (train + push):** open `notebooks/banking77_modernbert.ipynb` on Colab Pro,
+select a GPU runtime, and run top to bottom. Cell 1 installs the pinned HF libraries on
+top of Colab's preinstalled torch — it does **not** reinstall torch (doing so would break
+Colab's bundled torchvision). CELL 1b prompts you to paste an HF write token for the push.
+
+**Local (eval against the published model):**
+
 ```bash
 pip install -r requirements.txt
-# Train + push: open notebooks/banking77_modernbert.ipynb on Colab Pro (set HF token).
-# Reproduce eval against the published model:
 python eval.py
 ```
 

@@ -1,6 +1,11 @@
+# HF libraries are pinned for reproducibility. torch and scikit-learn use FLOORS, not
+# exact pins, on purpose: installing this on Colab must use the preinstalled,
+# CUDA-matched torch rather than upgrading it. Upgrading torch breaks Colab's bundled
+# torchvision ("RuntimeError: operator torchvision::nms does not exist"), which in turn
+# breaks the transformers import. matplotlib is preinstalled on Colab.
 transformers==5.10.1
 datasets==4.8.5
 accelerate==1.13.0
-torch==2.12.0
-scikit-learn==1.9.0
+torch>=2.4
+scikit-learn>=1.4
 matplotlib>=3.9
