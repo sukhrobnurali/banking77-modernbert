@@ -13,10 +13,10 @@ into a 77-way English banking-intent classifier on
 | Model | Accuracy | Macro-F1 |
 |---|---|---|
 | Majority class | 0.0130 | 0.0003 |
-| Frozen encoder + linear probe | 0.8906 | 0.8906 |
-| **Fine-tuned** | **0.9175** | **0.9176** |
+| Frozen encoder + linear probe | 0.8945 | 0.8948 |
+| **Fine-tuned** | **0.9399** | **0.9401** |
 
-Fine-tuning adds +2.7 points of macro-F1 over the frozen-encoder probe. Full numbers in
+Fine-tuning adds +4.5 points of macro-F1 over the frozen-encoder probe. Full numbers in
 [`results/metrics.json`](results/metrics.json).
 
 ## Reproduce

@@ -26,10 +26,10 @@ model-index:
       name: Banking77 (test, 3080)
     metrics:
     - type: accuracy
-      value: 0.9175
+      value: 0.9399
       name: Accuracy
     - type: f1
-      value: 0.9176
+      value: 0.9401
       name: Macro-F1
 ---
 
@@ -42,7 +42,7 @@ for **77-way English banking-intent classification**, trained on
 - **Base model:** `answerdotai/ModernBERT-base` (149M params, Apache-2.0)
 - **Task:** single-label intent detection over 77 fine-grained banking intents
 - **Held-out test:** the official Banking77 `test` split (3,080 queries, 40/intent), disjoint from training
-- **Result:** 0.9175 accuracy / 0.9176 macro-F1 on the test split
+- **Result:** 0.9399 accuracy / 0.9401 macro-F1 on the test split
 - **Training code:** https://github.com/sukhrobnurali/banking77-modernbert
 
 ## Intended use
@@ -66,20 +66,16 @@ frozen-encoder linear probe (mean-pooled base-model embeddings → logistic regr
 | Model | Accuracy | Macro-F1 | Weighted-F1 |
 |---|---|---|---|
 | Majority class | 0.0130 | 0.0003 | 0.0003 |
-| Frozen ModernBERT + linear probe | 0.8906 | 0.8906 | 0.8906 |
-| **This model (fine-tuned)** | **0.9175** | **0.9176** | **0.9176** |
+| Frozen ModernBERT + linear probe | 0.8945 | 0.8948 | 0.8948 |
+| **This model (fine-tuned)** | **0.9399** | **0.9401** | **0.9401** |
 
 ModernBERT's pretrained representations are already strong on this task — a linear probe
-on frozen embeddings reaches 0.8906 macro-F1 — so fine-tuning adds a consistent **+2.7
-points** of macro-F1 (0.8906 → 0.9176) on top of that, well clear of the 0.0003
-majority-class floor.
+on frozen embeddings reaches 0.8948 macro-F1 — so fine-tuning adds **+4.5 points** of
+macro-F1 (0.8948 → 0.9401) on top of that, well clear of the 0.0003 majority-class floor.
 
-At ~0.92 accuracy the residual errors fall among semantically adjacent intents. Per-class
-F1 spans 1.0000 (e.g. `apple_pay_or_google_pay`) down to 0.7436; the weakest intents sit in
-the closely related transfer / top-up families — `balance_not_updated_after_bank_transfer`
-(0.74), `pending_transfer` (0.79), `topping_up_by_card` (0.80), `declined_transfer` (0.83)
-— plus the `card_arrival` vs `card_delivery_estimate` pair (0.85 / 0.88), exactly the
-clusters you'd expect to be hardest. Full per-class breakdown:
+At ~0.94 accuracy the residual errors stay concentrated among semantically adjacent
+intents — the closely related transfer / top-up families and look-alike card intents. Full
+per-class breakdown:
 [`results/classification_report.txt`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/classification_report.txt);
 77×77 confusion matrix:
 [`results/confusion_matrix.png`](https://github.com/sukhrobnurali/banking77-modernbert/blob/main/results/confusion_matrix.png).
@@ -104,7 +100,7 @@ final numbers above.
 
 ## Reproducibility
 
-Fixed `seed=42`. Fine-tuned with the HF Trainer, `lr=2e-5`, up to 3 epochs with
+Fixed `seed=42`. Fine-tuned with the HF Trainer, `lr=5e-5`, up to 4 epochs with
 early stopping (patience 2) on validation macro-F1, `max_length=64`, batch size 32,
 warmup ratio 0.1, weight decay 0.01. Pinned versions in `requirements.txt`
 (transformers 5.10.1). `eval.py` reproduces the test numbers from the published
