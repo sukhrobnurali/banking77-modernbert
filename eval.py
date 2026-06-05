@@ -22,7 +22,7 @@ import config
 
 
 def load_data():
-    ds = load_dataset(config.DATASET_ID)
+    ds = load_dataset(config.DATASET_ID, revision=config.DATASET_REVISION)
     names = ds["train"].features[config.LABEL_COLUMN].names
     return ds["train"], ds["test"], names
 

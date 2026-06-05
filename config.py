@@ -3,6 +3,9 @@
 # --- Identities ---
 MODEL_ID = "answerdotai/ModernBERT-base"
 DATASET_ID = "PolyAI/banking77"
+# PolyAI/banking77 ships a loader script that datasets 4.x rejects. Load HF's
+# auto-converted parquet branch of the same first-party repo (no script executed).
+DATASET_REVISION = "refs/convert/parquet"
 HUB_MODEL_ID = "sukhrobnurali/modernbert-base-banking77"
 
 # --- Reproducibility ---
